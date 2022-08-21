@@ -1,11 +1,3 @@
-from distutils.log import info
-from itertools import count
-from pickletools import float8
-from turtle import distance
-from typing import Dict, Type
-
-
-
 class InfoMessage:
     """Информационное сообщение о тренировке."""
     def __init__(self,
@@ -21,15 +13,13 @@ class InfoMessage:
         self.speed = speed
         self.calories = calories
 
-
     def get_message(self) -> str:
         """Получить дистанцию в км."""
-        return(f'Тип тренировки: {self.training_type}; ' 
-              f'Длительность: {self.duration:.3f} ч.; ' 
-              f'Дистанция: {self.distance:.3f} км; ' 
-              f'Ср. скорость: {self.speed:.3f} км/ч; ' 
-              f'Потрачено ккал: {self.calories:.3f}.')
-
+        return(f'Тип тренировки: {self.training_type}; '
+               f'Длительность: {self.duration:.3f} ч.; '
+               f'Дистанция: {self.distance:.3f} км; '
+               f'Ср. скорость: {self.speed:.3f} км/ч; '
+               f'Потрачено ккал: {self.calories:.3f}.')
 
 class Training:
     """Базовый класс тренировки."""
@@ -44,7 +34,7 @@ class Training:
                  ) -> None:
         self.action = action
         self.duration = duration
-        self.weight = weight        
+        self.weight = weight
 
     def get_distance(self) -> float:
         """Получить дистанцию в км."""
@@ -67,7 +57,7 @@ class Training:
                            self.get_distance(),
                            self.get_mean_speed(),
                            self.get_spent_calories())
-      
+
 
 class Running(Training):
     """Тренировка: бег."""
@@ -156,5 +146,5 @@ if __name__ == '__main__':
 
     for workout_type, data in packages:
         training = read_package(workout_type, data)
-        main(training)        
+        main(training)
 
