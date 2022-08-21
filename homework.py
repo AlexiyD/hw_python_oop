@@ -78,7 +78,7 @@ class Running(Training):
         run_calorie_2 = 20
 
         return ((run_calorie_1 * self.get_mean_speed() - run_calorie_2)
-                 * self.weight / self.M_IN_KM * self.duration * self.M_IN_HR)
+                * self.weight / self.M_IN_KM * self.duration * self.M_IN_HR)
 
 
 class SportsWalking(Training):
@@ -101,8 +101,8 @@ class SportsWalking(Training):
         sw_calorie_2 = 0.029
 
         return ((sw_calorie_1 * self.weight + (self.get_mean_speed() ** 2
-                 // self.height) * sw_calorie_2 * self.weight)
-                 * self.duration * self.M_IN_HR)
+                // self.height) * sw_calorie_2 * self.weight)
+                * self.duration * self.M_IN_HR)
 
 
 class Swimming(Training):
@@ -132,7 +132,7 @@ class Swimming(Training):
         s_calorie_1 = 1.1
         s_calorie_2 = 2
         return ((self.get_mean_speed() + s_calorie_1)
-                 * s_calorie_2 * self.weight)
+                * s_calorie_2 * self.weight)
 
 
 def read_package(workout_type: str, data: list) -> Training:
