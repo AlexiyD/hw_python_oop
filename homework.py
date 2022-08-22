@@ -57,7 +57,6 @@ class Running(Training):
     """Тренировка: бег."""
     run_calorie_1 = 18
     run_calorie_2 = 20
-    action: int
     duration: float
     weight: float
 
@@ -96,7 +95,6 @@ class Swimming(Training):
     LEN_STEP = 1.38
     s_calorie_1 = 1.1
     s_calorie_2 = 2
-    action: int
     duration: float
     weight: float
     length_pool: float
