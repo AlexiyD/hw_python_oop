@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 
+
 @dataclass
 class InfoMessage:
     """Информационное сообщение о тренировке."""
@@ -8,7 +9,7 @@ class InfoMessage:
     distance: float
     speed: float
     calories: int
-          
+
     def get_message(self) -> str:
         """Получить дистанцию в км."""
         return (f'Тип тренировки: {self.training_type}; '
@@ -16,6 +17,7 @@ class InfoMessage:
                 f'Дистанция: {self.distance:.3f} км; '
                 f'Ср. скорость: {self.speed:.3f} км/ч; '
                 f'Потрачено ккал: {self.calories:.3f}.')
+
 
 @dataclass
 class Training:
@@ -26,7 +28,6 @@ class Training:
     action: int
     duration: float
     weight: float
-        
 
     def get_distance(self) -> float:
         """Получить дистанцию в км."""
@@ -50,6 +51,7 @@ class Training:
                            self.get_mean_speed(),
                            self.get_spent_calories())
 
+
 @dataclass
 class Running(Training):
     """Тренировка: бег."""
@@ -61,14 +63,18 @@ class Running(Training):
 
     def get_spent_calories(self) -> float:
         self.get_mean_speed()
-        return ((self.run_calorie_1 * self.get_mean_speed() - self.run_calorie_2)
-                * self.weight / self.M_IN_KM * self.duration * self.M_IN_HR)
+        return ((self.run_calorie_1 * self.get_mean_speed()
+                - self.run_calorie_2)
+                * self.weight / self.M_IN_KM
+                * self.duration * self.M_IN_HR)
+
 
 @dataclass
 class SportsWalking(Training):
     """Тренировка: спортивная ходьба."""
     sw_calorie_1 = 0.035
     sw_calorie_2 = 0.029
+
     def __init__(self,
                  action: int,
                  duration: float,
@@ -83,6 +89,7 @@ class SportsWalking(Training):
                 // self.height) * self.sw_calorie_2 * self.weight)
                 * self.duration * self.M_IN_HR)
 
+
 @dataclass
 class Swimming(Training):
     """Тренировка: плавание."""
@@ -94,7 +101,7 @@ class Swimming(Training):
     weight: float
     length_pool: float
     count_pool: int
-           
+
     def get_mean_speed(self) -> float:
         self.mean_speed = (self.length_pool * self.count_pool
                            / self.M_IN_KM / self.duration)
