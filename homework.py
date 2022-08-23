@@ -1,6 +1,7 @@
 from dataclasses import asdict, dataclass
 from typing import ClassVar
 
+
 @dataclass
 class InfoMessage:
     """Информационное сообщение о тренировке."""
@@ -23,8 +24,8 @@ class InfoMessage:
 @dataclass
 class Training:
     """Базовый класс тренировки."""
-    LEN_STEP: ClassVar [float] = 0.65
-    M_IN_KM: ClassVar[int] = 1000.0
+    LEN_STEP: ClassVar[float] = 0.65
+    M_IN_KM: ClassVar[float] = 1000.0
     M_IN_HR: ClassVar[int] = 60
     action: int
     duration: float
