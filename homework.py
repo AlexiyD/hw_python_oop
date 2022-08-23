@@ -1,5 +1,5 @@
-from dataclasses import dataclass
-
+from dataclasses import asdict, dataclass
+from typing import ClassVar
 
 @dataclass
 class InfoMessage:
@@ -9,22 +9,23 @@ class InfoMessage:
     distance: float
     speed: float
     calories: int
+    text_message = ('Тип тренировки: {}; '
+                    'Длительность: {:.3f} ч.; '
+                    'Дистанция: {:.3f} км; '
+                    'Ср. скорость: {:.3f} км/ч; '
+                    'Потрачено ккал: {:.3f}.')
 
     def get_message(self) -> str:
         """Получить дистанцию в км."""
-        return (f'Тип тренировки: {self.training_type}; '
-                f'Длительность: {self.duration:.3f} ч.; '
-                f'Дистанция: {self.distance:.3f} км; '
-                f'Ср. скорость: {self.speed:.3f} км/ч; '
-                f'Потрачено ккал: {self.calories:.3f}.')
+        return self.text_message.format(*asdict(self).values())
 
 
 @dataclass
 class Training:
     """Базовый класс тренировки."""
-    LEN_STEP = 0.65
-    M_IN_KM = 1000.0
-    M_IN_HR = 60
+    LEN_STEP: ClassVar [float] = 0.65
+    M_IN_KM: ClassVar[int] = 1000.0
+    M_IN_HR: ClassVar[int] = 60
     action: int
     duration: float
     weight: float
@@ -55,10 +56,8 @@ class Training:
 @dataclass
 class Running(Training):
     """Тренировка: бег."""
-    run_calorie_1 = 18
-    run_calorie_2 = 20
-    duration: float
-    weight: float
+    run_calorie_1: ClassVar[int] = 18
+    run_calorie_2: ClassVar[int] = 20
 
     def get_spent_calories(self) -> float:
         self.get_mean_speed()
@@ -71,16 +70,9 @@ class Running(Training):
 @dataclass
 class SportsWalking(Training):
     """Тренировка: спортивная ходьба."""
-    sw_calorie_1 = 0.035
-    sw_calorie_2 = 0.029
-
-    def __init__(self,
-                 action: int,
-                 duration: float,
-                 weight: float,
-                 height: float) -> None:
-        super().__init__(action, duration, weight)
-        self.height = height
+    sw_calorie_1: ClassVar[float] = 0.035
+    sw_calorie_2: ClassVar[float] = 0.029
+    height: float
 
     def get_spent_calories(self) -> float:
         self.get_mean_speed()
@@ -92,11 +84,9 @@ class SportsWalking(Training):
 @dataclass
 class Swimming(Training):
     """Тренировка: плавание."""
-    LEN_STEP = 1.38
-    s_calorie_1 = 1.1
-    s_calorie_2 = 2
-    duration: float
-    weight: float
+    LEN_STEP: ClassVar[float] = 1.38
+    s_calorie_1: ClassVar[float] = 1.1
+    s_calorie_2: ClassVar[int] = 2
     length_pool: float
     count_pool: int
 
@@ -116,6 +106,9 @@ def read_package(workout_type: str, data: list) -> Training:
     workout_type_dict: dict[str, Training] = {'SWM': Swimming,
                                               'RUN': Running,
                                               'WLK': SportsWalking}
+    if workout_type not in workout_type_dict:
+        raise ValueError(f'{workout_type} тип тренировки не найден')
+
     training = workout_type_dict[workout_type](*data)
     return training
 
