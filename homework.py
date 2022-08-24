@@ -68,7 +68,6 @@ class Running(Training):
                 * self.duration * self.M_IN_HR)
 
 
-
 @dataclass
 class SportsWalking(Training):
     """Тренировка: спортивная ходьба."""
@@ -107,7 +106,7 @@ def read_package(workout_type: str, data: list) -> Training:
     """Прочитать данные полученные от датчиков."""
     workout_type_dict: dict[str, Training] = {'SWM': Swimming,
                                               'RUN': Running,
-                                              'WLK': SportsWalking,}
+                                              'WLK': SportsWalking}
     if workout_type not in workout_type_dict:
         raise ValueError(f'{workout_type} тип тренировки не найден')
 
